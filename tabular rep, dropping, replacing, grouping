@@ -1,0 +1,342 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyO7vMn8VPNLl2jxFUNn6Qbo",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/kingori-wanjiru/python_code/blob/main/tabular%20rep%2C%20dropping%2C%20replacing%2C%20grouping\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "4UiOcLwpTCg6",
+        "outputId": "8f44cb6a-0480-4696-8e09-b31eb56aa541"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "         Name  Age  Gender Marks\n",
+            "0       Peter   25    Male    85\n",
+            "1       Joyce   30  Female    92\n",
+            "2      George   22    Male   NaN\n",
+            "3      Phylis   28  Female    88\n",
+            "4       Moses   24    Male   NaN\n",
+            "5  Priscillah   34  Female    79\n",
+            "6       Eliud   19    Male    80\n"
+          ]
+        }
+      ],
+      "source": [
+        "import pandas as pd\n",
+        "# Create a DataFrame with sample data\n",
+        "data = {\n",
+        "'Name': ['Peter', 'Joyce', 'George', 'Phylis', 'Moses','Priscillah', 'Eliud'],\n",
+        "'Age': [25, 30, 22, 28, 24, 34, 19],\n",
+        "'Gender': ['Male', 'Female', 'Male', 'Female','Male', 'Female','Male'],\n",
+        "'Marks': [85, 92,'NaN', 88, 'NaN',79,80]\n",
+        "}\n",
+        "wainaina = pd.DataFrame(data)\n",
+        "#wainaina.head(20)\n",
+        "print(wainaina)\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Replace 'Gender' values: 'Female' -> 1.0, 'Male' -> 0.0\n",
+        "wainaina['Gender'] = wainaina['Gender'].map({'Female': 1.0, 'Male': 0.0}).astype(float)\n",
+        "# Display the updated DataFrame\n",
+        "print(wainaina)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "ZMLySWOJmF18",
+        "outputId": "0c8f4fbc-81f9-42ae-b5d3-fe5176838f4f"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "         Name  Age  Gender Marks\n",
+            "0       Peter   25     0.0    85\n",
+            "1       Joyce   30     1.0    92\n",
+            "2      George   22     0.0   NaN\n",
+            "3      Phylis   28     1.0    88\n",
+            "4       Moses   24     0.0   NaN\n",
+            "5  Priscillah   34     1.0    79\n",
+            "6       Eliud   19     0.0    80\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "STUDENTDETAILS = {\n",
+        "'IDNO': [101, 102, 103, 104, 105, 106, 107, 108, 109, 110],\n",
+        "'NAME': ['Peter', 'Joyce', 'George', 'Phylis', 'Moses','Priscillah', 'Eliud','Veronicah','John', 'Juliet'],\n",
+        "'Campus': ['Main','Ruiru', 'Nairobi', 'Main', 'Ruiru', 'Nairobi','Main', 'Ruiru', 'Nairobi','Main']\n",
+        "}\n",
+        "wainaina1 = pd.DataFrame(STUDENTDETAILS)\n",
+        "print(wainaina1)\n",
+        "\n",
+        "\n"
+      ],
+      "metadata": {
+        "id": "LG6EP3XJpYpN",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "0a9a5fd2-d6b5-4b08-c955-ba8a808880af"
+      },
+      "execution_count": 7,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "   IDNO        NAME   Campus\n",
+            "0   101       Peter     Main\n",
+            "1   102       Joyce    Ruiru\n",
+            "2   103      George  Nairobi\n",
+            "3   104      Phylis     Main\n",
+            "4   105       Moses    Ruiru\n",
+            "5   106  Priscillah  Nairobi\n",
+            "6   107       Eliud     Main\n",
+            "7   108   Veronicah    Ruiru\n",
+            "8   109        John  Nairobi\n",
+            "9   110      Juliet     Main\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#dataset 1\n",
+        "import pandas as pd\n",
+        "FEESDETAILS = {\n",
+        "'IDNO': [101, 102, 103, 104, 105, 106, 107, 108, 109, 110],\n",
+        "'PENDING': ['6000', '375', 'NIL', '7640', '3800','NIL', '1250','900','5200', 'NIL']\n",
+        "}\n",
+        "wainaina2 = pd.DataFrame(FEESDETAILS)\n",
+        "print(wainaina2)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "DpKecjKx0q9J",
+        "outputId": "8f648837-b3a3-4380-ba2f-466546ff1af4"
+      },
+      "execution_count": 13,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "   IDNO PENDING\n",
+            "0   101    6000\n",
+            "1   102     375\n",
+            "2   103     NIL\n",
+            "3   104    7640\n",
+            "4   105    3800\n",
+            "5   106     NIL\n",
+            "6   107    1250\n",
+            "7   108     900\n",
+            "8   109    5200\n",
+            "9   110     NIL\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#dataset 2\n",
+        "import pandas as pd\n",
+        "STUDENTDETAILS = {\n",
+        "'IDNO': [101, 102, 103, 104, 105, 106, 107, 108, 109, 110],\n",
+        "'NAME': ['Peter', 'Joyce', 'George', 'Phylis', 'Moses','Priscillah', 'Eliud','Veronicah','John', 'Juliet'],\n",
+        "'Campus': ['Main', 'Ruiru', 'Nairobi', 'Main', 'Ruiru', 'Nairobi','Main', 'Ruiru', 'Nairobi','Main']\n",
+        "}\n",
+        "wainaina1 = pd.DataFrame(STUDENTDETAILS)\n",
+        "\n",
+        "FEESDETAILS = {\n",
+        "'IDNO': [101, 102, 103, 104, 105, 106, 107, 108, 109, 110],\n",
+        "'PENDING': ['6000', '375', 'NIL', '7640', '3800','NIL', '1250','900','5200', 'NIL']\n",
+        "}\n",
+        "wainaina2 = pd.DataFrame(FEESDETAILS)\n",
+        "\n",
+        "#merging Dataframe\n",
+        "print(pd.merge(wainaina1,wainaina2,on='IDNO'))\n",
+        "\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "872HCZmy024k",
+        "outputId": "16c2330b-7ed0-4068-a312-3dd53e3eda01"
+      },
+      "execution_count": 9,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "   IDNO        NAME   Campus PENDING\n",
+            "0   101       Peter     Main    6000\n",
+            "1   102       Joyce    Ruiru     375\n",
+            "2   103      George  Nairobi     NIL\n",
+            "3   104      Phylis     Main    7640\n",
+            "4   105       Moses    Ruiru    3800\n",
+            "5   106  Priscillah  Nairobi     NIL\n",
+            "6   107       Eliud     Main    1250\n",
+            "7   108   Veronicah    Ruiru     900\n",
+            "8   109        John  Nairobi    5200\n",
+            "9   110      Juliet     Main     NIL\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#merging two datasets\n",
+        "import pandas as pd\n",
+        "# Create a DataFrame for student details\n",
+        "STUDENTDETAILS = {\n",
+        "'IDNO': [101, 102, 103, 104, 105, 106, 107, 108, 109, 110],\n",
+        "'NAME': ['Peter', 'Joyce', 'George', 'Phylis', 'Moses', 'Priscillah', 'Eliud', 'Veronicah', 'John', 'Juliet'],\n",
+        "'Campus': ['Main', 'Ruiru', 'Nairobi', 'Main', 'Ruiru', 'Nairobi', 'Main', 'Ruiru', 'Nairobi', 'Main']\n",
+        "}\n",
+        "wainaina1 = pd.DataFrame(STUDENTDETAILS)\n",
+        "# Create a DataFrame for student fees\n",
+        "FEESDETAILS = {\n",
+        "'IDNO': [101, 102, 103, 104, 105, 106, 107, 108, 109, 110],\n",
+        "'PENDING': [6000, 375, 0, 7640, 3800, 0, 1250, 900, 5200, 0]\n",
+        "}\n",
+        "wainaina2 = pd.DataFrame(FEESDETAILS)\n",
+        "# Merge the two DataFrames on 'IDNO' to combine them\n",
+        "merged_df = pd.merge(wainaina1, wainaina2, on='IDNO')\n",
+        "# Group the merged DataFrame by 'Campus' and calculate the total pending fees for each campus\n",
+        "campus_fee_totals = merged_df.groupby('Campus')['PENDING'].sum().reset_index()\n",
+        "# Display the total pending fees for each campus\n",
+        "print(campus_fee_totals)\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "RqYVC51F1DRM",
+        "outputId": "e770fcf6-9fc5-41a9-86dc-fd95018d49b2"
+      },
+      "execution_count": 12,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "    Campus  PENDING\n",
+            "0     Main    14890\n",
+            "1  Nairobi     5200\n",
+            "2    Ruiru     5075\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#grouping data\n",
+        "import pandas as pd\n",
+        "cardata = {\n",
+        "'Brand': ['Maruti', 'Toyota', 'Mahindra', 'Ford', 'Maruti', 'Toyota', 'Toyota', 'Ford', 'Mahindra', 'Maruti'],\n",
+        "'Year': [2009, 2010, 2011, 2010, 2010, 2009, 2010, 2012, 2010, 2009],\n",
+        "'Model': ['Swift', 'Corolla', 'Scorpio', 'Fiesta', 'Alto', 'Camry', 'Innova', 'Figo', 'Bolero', 'WagonR'],\n",
+        "'Sales': [120, 150, 95, 50, 105, 130, 90, 75, 85, 115]\n",
+        "}\n",
+        "# Create a DataFrame from the sample data\n",
+        "wainaina= pd.DataFrame(cardata)\n",
+        "print(wainaina)\n",
+        "print(\"\\n GROUPED DATA \\n\")\n",
+        "grouped=wainaina.groupby('Year')\n",
+        "# Display the filtered DataFrame for car sales in a given year\n",
+        "print(grouped.get_group(2011))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "-apdEG_31JxA",
+        "outputId": "54880a60-85da-4bb8-8d66-65321142fdf5"
+      },
+      "execution_count": 11,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "      Brand  Year    Model  Sales\n",
+            "0    Maruti  2009    Swift    120\n",
+            "1    Toyota  2010  Corolla    150\n",
+            "2  Mahindra  2011  Scorpio     95\n",
+            "3      Ford  2010   Fiesta     50\n",
+            "4    Maruti  2010     Alto    105\n",
+            "5    Toyota  2009    Camry    130\n",
+            "6    Toyota  2010   Innova     90\n",
+            "7      Ford  2012     Figo     75\n",
+            "8  Mahindra  2010   Bolero     85\n",
+            "9    Maruti  2009   WagonR    115\n",
+            "\n",
+            " GROUPED DATA \n",
+            "\n",
+            "      Brand  Year    Model  Sales\n",
+            "2  Mahindra  2011  Scorpio     95\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "a_yBiDw612sf"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
